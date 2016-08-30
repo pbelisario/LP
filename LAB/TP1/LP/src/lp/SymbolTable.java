@@ -81,4 +81,6 @@ class  SymbolTable{
 		addToken("rows",TokenType.ROWS);
 		addToken("cols",TokenType.COLS);
 	}
+        
+      
 }

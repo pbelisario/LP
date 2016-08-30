@@ -49,13 +49,11 @@ public class LexicalAnalysis implements AutoCloseable{
                     if( c == -1 ) 
                         return lex;
                     if (c == ' ' || c == '\t' || c == '\r' || c == '\n'){
-                        lex.token += (char) c;
                         if(c == '\n'){
                             line++;
                         }
                         estado = 1;
                     } else if (c == '#'){
-                        lex.token += (char) c;
                         estado = 2;
                     } else if(Character.isDigit(c)){
                         lex.token += (char) c;
@@ -72,7 +70,7 @@ public class LexicalAnalysis implements AutoCloseable{
                     } else if (c == '"'){
                         lex.token += (char) c;
                         estado = 7;
-                    } else if(c == ';' || c == '.' || c == '(' || c == ')' || c == '[' || c == ']' || c == '&' || c == '|' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%'){
+                    } else if(c == ';' || c == '.' || c == ',' || c == '(' || c == ')' || c == '[' || c == ']' || c == '&' || c == '|' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%'){
                         lex.token += (char) c;
                         estado = 8;
                     } else {
@@ -87,13 +85,14 @@ public class LexicalAnalysis implements AutoCloseable{
                         return lex;
                     }
                     if(c == '\n'){
-                        lex.token += (char) c;
+                        input.unread(c);
                         estado = 1;
-                    }
+                    } 
                     else{
-                        lex.token += (char) c;
+                        
                         estado = 2;
                     }
+                    break;
                 case 3:
                     if( c == -1){
                         lex.type = TokenType.UNEXPECTED_EOF;
@@ -106,6 +105,7 @@ public class LexicalAnalysis implements AutoCloseable{
                         input.unread(c);
                         lex.type = TokenType.NUMBER;
                         estado = 8;
+                        return lex;
                     }
                     break;
                 case 4:
@@ -129,7 +129,7 @@ public class LexicalAnalysis implements AutoCloseable{
                     }
                     if(c == '='){
                         lex.token += (char) c;
-                        estado = 8;                  
+                        estado = 8;              
                     } else {
                         input.unread(c);
                         estado = 8;
@@ -159,8 +159,9 @@ public class LexicalAnalysis implements AutoCloseable{
                         estado = 7;
                     }
                     else{
-                        lex.token += (char) c;
                         estado = 8;
+                        lex.type = TokenType.STRING;
+                        return lex;
                     }
                     break;
             }
