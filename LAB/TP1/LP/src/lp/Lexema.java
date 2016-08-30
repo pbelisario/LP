@@ -10,12 +10,11 @@ package lp;
  * @author alunoccc
  */
 class Lexema{
-	public String token;
-	public TokenType type;
+    public String token;
+    public TokenType type;
         
-        public Lexema(String s, TokenType tt){
-            token = s;
-            type = tt;
-              
-        }
+    public Lexema(String s, TokenType tt){
+        token = s;
+        type = tt;          
+    }
 }

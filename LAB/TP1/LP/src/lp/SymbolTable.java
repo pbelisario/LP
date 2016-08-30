@@ -25,18 +25,23 @@ class  SymbolTable{
 		st.put (lex,s);
 	}
 
-	public boolean haveLex(String lex){
+	public boolean contains(String lex){
 		return st.containsKey(lex);
 	}
+        
+        public TokenType find(String token) {
+            return (this.contains(token) ? st.get(token) : TokenType.INVALID_TOKEN);
+        }
 
 	public SymbolTable(){
+                st = new HashMap<String, TokenType>();
                 //addToken("",Symbol.VAR);
 		addToken("=",TokenType.ASSIGN);
 		addToken("input",TokenType.INPUT);
 		addToken("(",TokenType.PAR_OPEN);
 		addToken(")",TokenType.PAR_CLOSE);
                 //addToken("",Symbol.STRING);
-                addToken(";",TokenType.POT_COMMA);
+                addToken(";",TokenType.DOT_COMMA);
                 addToken("[",TokenType.BRA_OPEN);
                 addToken("]",TokenType.BRA_CLOSE);
                 addToken(".",TokenType.DOT);

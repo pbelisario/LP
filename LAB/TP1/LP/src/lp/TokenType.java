@@ -18,7 +18,7 @@ public enum TokenType {
     PAR_OPEN,//= 4,-------------- (
     PAR_CLOSE,// = 5, ----------- )
     STRING,// = 6(Entre aspas),-- (none)
-    POT_COMMA,// = 7, ----------- ;
+    DOT_COMMA,// = 7, ----------- ;
     BRA_OPEN,// = 8, ------------ [
     BRA_CLOSE,// = 9, ----------- ]
     DOT,// = 10, ---------------- .

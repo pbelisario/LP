@@ -1,6 +1,3 @@
-
-import java.io.InputStream;
-
 //UNEXPECTED_EOF = -2,
 //INVALID_TOKEN = -1,
 //END_OF_FILE = 0,
@@ -50,7 +47,6 @@ import java.io.InputStream;
 //ROWS 44, ----------------- rows
 //COLS = 45. --------------- cols
 
-/*
 
 class  SymbolTable{
 	private Map<String,Symbol> st = new HashMap<>();
@@ -64,9 +60,9 @@ class  SymbolTable{
 		st.put (lex,s);
 	}
 
-	public boolean haveLex(String lex){
-		if(st.contain(lex)) return true;
-		return false;
+	public bool haveLex(String lex){
+		if(st.contain(lex)) return true
+		return false
 	}
 
 	public SymbolTable(){
@@ -120,7 +116,7 @@ class  SymbolTable{
 	}
 }
 
-Lexema = (Token, Symbol);
+Lexima = (Token, Symbol);
 ("dim", Symbol.VAR)
 ("=", Symbol.ASSIGN)
 ("input", Symbol.INPUT)
@@ -152,5 +148,4 @@ class LexicalAnalysis{
 
 	}
 }
-*/
 
