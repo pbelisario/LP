@@ -13,7 +13,7 @@ import java.io.PushbackReader;
 
 /**
  *
- * @author alunoccc
+ * @author pfbit
  */
 public class LexicalAnalysis {
     //PUSH BACK READER input
@@ -48,7 +48,7 @@ public class LexicalAnalysis {
                     } else if(c == '!'){
                         lex.token += (char) c;
                         estado = 4;
-                    } else if( c == '>'){
+                    } else if(c == '>' || c == '<' || c == '='){
                         lex.token += (char) c;
                         estado = 5;
                     } else if(Character.isLetter(c)){
@@ -68,8 +68,8 @@ public class LexicalAnalysis {
                     break;
                 case 2:
                     if( c == -1){
-                            lex.type = TokenType.UNEXPECTED_EOF;
-                            return lex;
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
                     }
                     if(c == '\n'){
                         lex.token += (char) c;
@@ -81,8 +81,8 @@ public class LexicalAnalysis {
                     }
                 case 3:
                     if( c == -1){
-                            lex.type = TokenType.UNEXPECTED_EOF;
-                            return lex;
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
                     }
                     if(Character.isDigit(c)){
                         lex.token += (char) c;
@@ -95,8 +95,8 @@ public class LexicalAnalysis {
                     break;
                 case 4:
                     if( c == -1){
-                            lex.type = TokenType.UNEXPECTED_EOF;
-                            return lex;
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
                     }
                     if(c == '='){
                         lex.token += (char) c;
@@ -109,8 +109,8 @@ public class LexicalAnalysis {
                     break;
                 case 5:
                     if( c == -1){
-                            lex.type = TokenType.UNEXPECTED_EOF;
-                            return lex;
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
                     }
                     if(c == '='){
                         lex.token += (char) c;
@@ -121,7 +121,33 @@ public class LexicalAnalysis {
                     }
                     break;
                 case 6:
-                    
+                    if( c == -1){
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
+                    }
+                    if(Character.isLetter(c) || Character.isDigit(c)){
+                        lex.token += (char) c;
+                        estado = 6;
+                    }
+                    else{
+                        input.unread(c);
+                        estado = 8;
+                    }
+                    break;
+                case 7:
+                    if( c == -1){
+                        lex.type = TokenType.UNEXPECTED_EOF;
+                        return lex;
+                    }
+                    if(c != '"'){
+                        lex.token += (char) c;
+                        estado = 7;
+                    }
+                    else{
+                        lex.token += (char) c;
+                        estado = 8;
+                    }
+                    break;
             }
         }
         if(st.contains(lex.token)){
