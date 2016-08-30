@@ -55,7 +55,6 @@ public class LexicalAnalysis {
                         lex.token += (char) c;
                         estado = 6;
                     } else if (c == '"'){
-                        lex.token += (char) c;
                         estado = 7;
                     } else if(c == ';' || c == '.' || c == '(' || c == ')' || c == '[' || c == ']' || c == '&' || c == '|' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%'){
                         lex.token += (char) c;
@@ -144,9 +143,9 @@ public class LexicalAnalysis {
                         estado = 7;
                     }
                     else{
-                        lex.token += (char) c;
                         estado = 8;
                     }
+                    lex.type = TokenType.STRING;
                     break;
             }
         }

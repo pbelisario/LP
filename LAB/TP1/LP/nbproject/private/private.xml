@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/TokenType.java</file>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/LexicalAnalysis.java</file>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/LP.java</file>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/mlab.java</file>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/Lexema.java</file>
-            <file>file:/C:/Users/pfbit/Desktop/FACULDADE%20GIT/LP-TP1/LAB/TP1/LP/src/lp/SymbolTable.java</file>
+            <file>file:/home/pedro/Downloads/LP/LP-TP1/LAB/TP1/LP/src/lp/TokenType.java</file>
+            <file>file:/home/pedro/Downloads/LP/LP-TP1/LAB/TP1/LP/src/lp/Lexema.java</file>
+            <file>file:/home/pedro/Downloads/LP/LP-TP1/LAB/TP1/LP/src/lp/SymbolTable.java</file>
+            <file>file:/home/pedro/Downloads/LP/LP-TP1/LAB/TP1/LP/src/lp/LexicalAnalysis.java</file>
         </group>
     </open-files>
 </project-private>
