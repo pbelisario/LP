@@ -6,6 +6,7 @@
 package lp;
 
 import java.io.IOException;
+import jdk.nashorn.internal.parser.Token;
 
 /**
  *
@@ -228,6 +229,18 @@ public class SyntaticalAnalysis {
                 procSum();
             } else if(current.type == TokenType.MUL){
                 procMul();
+            }
+        }
+        if(current.type == TokenType.DOT){
+            matchToken(TokenType.DOT);
+            if(current.type == TokenType.SIZE){
+                procSize();
+            } else if(current.type == TokenType.ROWS){
+                procRows();
+            } else if(current.type == TokenType.COLS){
+                procCols();
+            } else if(current.type == TokenType.VALUE){
+                procValue();
             }
         }
     }
