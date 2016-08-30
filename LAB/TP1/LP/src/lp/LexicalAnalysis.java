@@ -15,14 +15,26 @@ import java.io.PushbackReader;
  *
  * @author pfbit
  */
-public class LexicalAnalysis {
+public class LexicalAnalysis implements AutoCloseable{
+    
     //PUSH BACK READER input
-    public PushbackInputStream input;
-    public SymbolTable st;
+    private PushbackInputStream input;
+    private SymbolTable st;
+    
+    private int line;
+    
+    public int getLine(){
+        return line;
+    }
     
     public LexicalAnalysis(String file) throws FileNotFoundException{
         input = new PushbackInputStream( new FileInputStream(file) );
         st = new SymbolTable();
+    }
+    
+    @Override
+    public void close() throws Exception {
+        input.close();
     }
     
     public Lexema nextToken() throws IOException{
@@ -38,6 +50,9 @@ public class LexicalAnalysis {
                         return lex;
                     if (c == ' ' || c == '\t' || c == '\r' || c == '\n'){
                         lex.token += (char) c;
+                        if(c == '\n'){
+                            line++;
+                        }
                         estado = 1;
                     } else if (c == '#'){
                         lex.token += (char) c;
@@ -157,4 +172,5 @@ public class LexicalAnalysis {
         }
         return lex;
     }
+
 }

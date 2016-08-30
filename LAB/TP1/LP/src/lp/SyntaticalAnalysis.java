@@ -20,16 +20,28 @@ public class SyntaticalAnalysis {
         this.la = la;
         this.current = la.nextToken();
     }
+
+    SyntaticalAnalysis() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public void matchToken(TokenType type) throws IOException{
         if(type == current.type){
             current = la.nextToken();
         } else {
-            System.exit(1);
+            if(current.type == TokenType.UNEXPECTED_EOF){
+                unexpectedEofError();
+            } else {
+                unexpectedToken();
+            }
         }
     }
     
-   
+    void start() throws IOException{
+        procStatements();
+        matchToken(TokenType.END_OF_FILE);
+    }
+    
     //<statements> ::= <statement> { <statement>}
     void procStatements() throws IOException{ 
         procStatement();
@@ -41,7 +53,6 @@ public class SyntaticalAnalysis {
         current.type == TokenType.FOR ){
             procStatement();
         }
-        matchToken(TokenType.END_OF_FILE);
     }
     
     //<statement> ::= <input> | <show> | <assign> | <if> | <while> | <for>
@@ -59,7 +70,7 @@ public class SyntaticalAnalysis {
         } else if(current.type == TokenType.FOR){
             procFor();
         } else{
-            // Erro : ABORTAR
+            showError();
         }
     }
     
@@ -121,7 +132,7 @@ public class SyntaticalAnalysis {
       } else if(current.type == TokenType.VALUE){
           procValue();
       } else {
-          //ERRO : ABORT
+          showError();
       }
     }
     
@@ -138,7 +149,7 @@ public class SyntaticalAnalysis {
                 matchToken(TokenType.OR);
                 procBoolExpr();
             } else {
-                //ERROR : ABORT
+                showError();
             }
         }
     }
@@ -170,7 +181,7 @@ public class SyntaticalAnalysis {
             matchToken(TokenType.MINUS);
             procTerm();
         } else {
-            //ERRO : ABORT
+            showError();
         }        
     }
     
@@ -204,7 +215,7 @@ public class SyntaticalAnalysis {
             procExpr();
             matchToken(TokenType.PAR_CLOSE);
         } else {
-            //ERRO : ABORT. 
+            showError(); 
         }
     }
 
@@ -217,7 +228,7 @@ public class SyntaticalAnalysis {
         } else if(current.type == TokenType.BRA_OPEN) {
             procGen();
         } else {
-            //ERRO : ABORT
+            showError();
         }
         while(current.type == TokenType.DOT){
             matchToken(TokenType.DOT);
@@ -229,18 +240,18 @@ public class SyntaticalAnalysis {
                 procSum();
             } else if(current.type == TokenType.MUL){
                 procMul();
-            }
-        }
-        if(current.type == TokenType.DOT){
-            matchToken(TokenType.DOT);
-            if(current.type == TokenType.SIZE){
+            } else if(current.type == TokenType.SIZE){
                 procSize();
+                break;
             } else if(current.type == TokenType.ROWS){
                 procRows();
+                break;
             } else if(current.type == TokenType.COLS){
                 procCols();
+                break;
             } else if(current.type == TokenType.VALUE){
                 procValue();
+                break;
             }
         }
     }
@@ -322,7 +333,7 @@ public class SyntaticalAnalysis {
         } else if(current.type == TokenType.ISEQ){
             procIseq();
         } else {
-            //ERROR :ABORT
+            showError();
         }
     }
     
@@ -407,8 +418,7 @@ public class SyntaticalAnalysis {
         if(current.type == TokenType.VAR) procVar();
         else if(current.type == TokenType.BRA_OPEN) procGen();
         else {
-            //ERRO : lexema invalido
-            //ABORTA
+            showError();
         } while(current.type == TokenType.DOT){
             matchToken(TokenType.DOT);
             if(current.type == TokenType.TRANSPOSED){
@@ -420,11 +430,29 @@ public class SyntaticalAnalysis {
             } else if(current.type == TokenType.MUL){
                 procMul();
             } else {
-                //ERRO : ABORTAR
+                showError();
             }
             
         }
         
+    }
+
+    private void unexpectedEofError() {
+        System.out.println("Error, Fim de arquivo inexperado");
+    }
+
+    private void unexpectedToken() {
+        System.out.println("ERROR, Token inesperado : "+ '"'+current.type+'"');
+        System.exit(1);
+              
+    }
+
+    private void showError() {
+        if(current.type == TokenType.UNEXPECTED_EOF){
+            unexpectedEofError();
+        } else if(current.type == TokenType.INVALID_TOKEN){
+            unexpectedToken();
+        }
     }
 
 }
