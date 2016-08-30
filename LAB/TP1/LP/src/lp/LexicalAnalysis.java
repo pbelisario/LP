@@ -15,14 +15,26 @@ import java.io.PushbackReader;
  *
  * @author pfbit
  */
-public class LexicalAnalysis {
+public class LexicalAnalysis implements AutoCloseable{
+    
     //PUSH BACK READER input
-    public PushbackInputStream input;
-    public SymbolTable st;
+    private PushbackInputStream input;
+    private SymbolTable st;
+    
+    private int line;
+    
+    public int getLine(){
+        return line;
+    }
     
     public LexicalAnalysis(String file) throws FileNotFoundException{
         input = new PushbackInputStream( new FileInputStream(file) );
         st = new SymbolTable();
+    }
+    
+    @Override
+    public void close() throws Exception {
+        input.close();
     }
     
     public Lexema nextToken() throws IOException{
@@ -37,10 +49,11 @@ public class LexicalAnalysis {
                     if( c == -1 ) 
                         return lex;
                     if (c == ' ' || c == '\t' || c == '\r' || c == '\n'){
-                        lex.token += (char) c;
+                        if(c == '\n'){
+                            line++;
+                        }
                         estado = 1;
                     } else if (c == '#'){
-                        lex.token += (char) c;
                         estado = 2;
                     } else if(Character.isDigit(c)){
                         lex.token += (char) c;
@@ -56,7 +69,7 @@ public class LexicalAnalysis {
                         estado = 6;
                     } else if (c == '"'){
                         estado = 7;
-                    } else if(c == ';' || c == '.' || c == '(' || c == ')' || c == '[' || c == ']' || c == '&' || c == '|' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%'){
+                    } else if(c == ';' || c == '.' || c == ',' || c == '(' || c == ')' || c == '[' || c == ']' || c == '&' || c == '|' || c == '+' || c == '-' || c == '*' || c == '/' || c == '%'){
                         lex.token += (char) c;
                         estado = 8;
                     } else {
@@ -71,13 +84,14 @@ public class LexicalAnalysis {
                         return lex;
                     }
                     if(c == '\n'){
-                        lex.token += (char) c;
+                        input.unread(c);
                         estado = 1;
-                    }
+                    } 
                     else{
-                        lex.token += (char) c;
+                        
                         estado = 2;
                     }
+                    break;
                 case 3:
                     if( c == -1){
                         lex.type = TokenType.UNEXPECTED_EOF;
@@ -90,6 +104,7 @@ public class LexicalAnalysis {
                         input.unread(c);
                         lex.type = TokenType.NUMBER;
                         estado = 8;
+                        return lex;
                     }
                     break;
                 case 4:
@@ -113,7 +128,7 @@ public class LexicalAnalysis {
                     }
                     if(c == '='){
                         lex.token += (char) c;
-                        estado = 8;                  
+                        estado = 8;              
                     } else {
                         input.unread(c);
                         estado = 8;
@@ -144,6 +159,8 @@ public class LexicalAnalysis {
                     }
                     else{
                         estado = 8;
+                        lex.type = TokenType.STRING;
+                        return lex;
                     }
                     lex.type = TokenType.STRING;
                     break;
@@ -156,4 +173,5 @@ public class LexicalAnalysis {
         }
         return lex;
     }
+
 }
