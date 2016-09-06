@@ -15,6 +15,7 @@ import jdk.nashorn.internal.parser.Token;
 public class SyntaticalAnalysis {
     private LexicalAnalysis la;
     private Lexema current;
+    private Map<String, Variable> variables = new HashMap<String, Variable>;
     
     public SyntaticalAnalysis(LexicalAnalysis la) throws IOException{
         this.la = la;
@@ -55,11 +56,9 @@ public class SyntaticalAnalysis {
         }
     }
     
-    //<statement> ::= <input> | <show> | <assign> | <if> | <while> | <for>
+    //<statement> ::= <show> | <assign> | <if> | <while> | <for>
     void procStatement() throws IOException{ 
-        if(current.type == TokenType.INPUT){
-            procInput();
-        } else if(current.type == TokenType.SHOW){
+        if(current.type == TokenType.SHOW){
             procShow();
         } else if(current.type == TokenType.VAR){
             procAssign();
@@ -83,21 +82,27 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.DOT_COMMA);
     }
     
-    //<show> ::= show '(' (<text> | <matrix> ) ')' ';'
-    void procShow() throws IOException{
+    //<show> ::= show '(' <text> ')' ';'
+    ShowCommad procShow() throws IOException{
         matchToken(TokenType.SHOW);
         matchToken(TokenType.PAR_OPEN);
-        procText();
+        Value<?> v = procText();
+        matchToken(TokenType.PAR_CLOSE);
+        matchToken(TokenType.DOT_COMMA);
+        ShowCommand c = new ShowCommand(v);
+        return c;
     }
     //<assign> ::= <var> '=' <value> ';'
     void procAssign() throws IOException{
-        matchToken(TokenType.VAR);
+        Variable var = procVar();
         matchToken(TokenType.ASSIGN);
-        procValue();
+        Value<?> val = procValue();
         matchToken(TokenType.DOT_COMMA);
+        AssignedCommand c = new AssignedCommand(var,val,lex.getLine());
+        return c;
     }
     
-    //<if> ::= if <boolexpr> <commands> [else <commands>] end
+    //<if> ::= if <boolexpr> <statements> [else <statements>] end
     void procIf() throws IOException{
         matchToken(TokenType.IF);
         procBoolExpr();
@@ -399,16 +404,32 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.PAR_CLOSE);
     }
    
-    void procVar() throws IOException{
+    
+    Variable procVar() throws IOException{
+        String varName = current.token;
         matchToken(TokenType.VAR);
+        Variable v = variables.get(varName);
+        if(v == null){
+            v = new Variable(varName);
+            variables.put(varName, v);
+        }
+        return v;
     }
     
-    void procNumber() throws IOException{
+    ConstInt procNumber() throws IOException{
+        String tmp = current.token;
         matchToken(TokenType.NUMBER);
+        int n = Integer.parseInt(tmp);
+        ConstInt v = new ConstInt(n);
+        return v;
     }
     
-    void procString() throws IOException{
-        matchToken(TokenType.STRING);
+    ConstString procString() throws IOException{
+        String tmp = current.token;
+        matchToken(TokenType.String);
+        String s = tmp;
+        ConstStringv = new ConstString(s);
+        return s;
     }
     
 
