@@ -5,7 +5,10 @@
  */
 package lp;
 
+import Pacote.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import jdk.nashorn.internal.parser.Token;
 
 /**
@@ -83,7 +86,7 @@ public class SyntaticalAnalysis {
     }
     
     //<show> ::= show '(' <text> ')' ';'
-    ShowCommad procShow() throws IOException{
+    ShowCommand procShow() throws IOException{
         matchToken(TokenType.SHOW);
         matchToken(TokenType.PAR_OPEN);
         Value<?> v = procText();
