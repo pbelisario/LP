@@ -47,7 +47,7 @@ public class SyntaticalAnalysis {
     }
     
     //<statements> ::= <statement> { <statement>}
-    void procStatements() throws IOException{ 
+    CommandBlock ßprocStatements() throws IOException{ 
         procStatement();
         while(current.type == TokenType.INPUT ||
         current.type == TokenType.SHOW ||
@@ -60,7 +60,7 @@ public class SyntaticalAnalysis {
     }
     
     //<statement> ::= <show> | <assign> | <if> | <while> | <for>
-    void procStatement() throws IOException{ 
+    Command procStatement() throws IOException{ 
         if(current.type == TokenType.SHOW){
             procShow();
         } else if(current.type == TokenType.VAR){
@@ -77,7 +77,7 @@ public class SyntaticalAnalysis {
     }
     
     //<input> ::= input '(' <text> ')' ';'
-    void procInput() throws IOException{
+    InputIntValue procInput() throws IOException{
         matchToken(TokenType.INPUT);
         matchToken(TokenType.PAR_OPEN);
         procText();
@@ -96,7 +96,7 @@ public class SyntaticalAnalysis {
         return c;
     }
     //<assign> ::= <var> '=' <value> ';'
-    void procAssign() throws IOException{
+    AssignCommand procAssign() throws IOException{
         Variable var = procVar();
         matchToken(TokenType.ASSIGN);
         Value<?> val = procValue();
@@ -106,7 +106,7 @@ public class SyntaticalAnalysis {
     }
     
     //<if> ::= if <boolexpr> <statements> [else <statements>] end
-    void procIf() throws IOException{
+    IfCommand procIf() throws IOException{
         matchToken(TokenType.IF);
         procBoolExpr();
         procStatement();
@@ -118,7 +118,7 @@ public class SyntaticalAnalysis {
     }
     
     //<while> ::= whlie <boolexpr> <statements> end
-    void procWhile() throws IOException{
+    WhileCommand procWhile() throws IOException{
         matchToken(TokenType.PAR_OPEN);
         procBoolExpr();
         procStatements();
@@ -126,7 +126,7 @@ public class SyntaticalAnalysis {
     }
     
     //<for> ::= for <var> '=' <value> <statements> end
-    void procFor() throws IOException{
+    ForCommand procFor() throws IOException{
         matchToken(TokenType.FOR);
         procMatrixExpr();
         procStatements();
@@ -134,7 +134,7 @@ public class SyntaticalAnalysis {
     }
     
     //<text> ::= { <string> | <value> }
-    void procText() throws IOException{
+    Value<?> procText() throws IOException{
       if(current.type == TokenType.STRING){
           procString();
       } else if(current.type == TokenType.VALUE){
@@ -145,7 +145,7 @@ public class SyntaticalAnalysis {
     }
     
     //<boolexpr> ::= <expr> <boolop> <expr> { ('&' | '|') <boolexpr> }
-    void procBoolExpr() throws IOException{
+    RealBoolExpr procBoolExpr() throws IOException{
         procExpr();
         procBoolOP();
         procExpr();
@@ -163,7 +163,7 @@ public class SyntaticalAnalysis {
     }
     
     //<boolop> ::= '==' | '!=' | '<' | '>' | '<=' | '>='
-    void procBoolOP() throws IOException{
+    BoolOp procBoolOP() throws IOException{
         if(current.type == TokenType.EQUAL){
             matchToken(TokenType.EQUAL);
         } else if(current.type == TokenType.DIFF){
@@ -180,7 +180,7 @@ public class SyntaticalAnalysis {
     }
    
     //<expr> ::= <term> [ ('+' | '-') <term> ]
-    void procExpr() throws IOException {
+    Value<?> procExpr() throws IOException {
         procTerm();
         if(current.type == TokenType.PLUS){
             matchToken(TokenType.PLUS);
@@ -194,7 +194,7 @@ public class SyntaticalAnalysis {
     }
     
     //<term> ::= <factor> [ ('*' | '/' | '%') <factor> ]
-    void procTerm() throws IOException {
+    Value<?> procTerm() throws IOException {
         procFactor();
         if(current.type == TokenType.TIMES){
             matchToken(TokenType.TIMES);
@@ -209,7 +209,7 @@ public class SyntaticalAnalysis {
     }
     
     //<factor> ::= (['+' | '-'] <number>) | <value> | '(' <expr> ')'
-    void procFactor() throws IOException {
+    Value<?> procFactor() throws IOException {
          if(current.type == TokenType.PLUS){
             matchToken(TokenType.PLUS);
             procNumber();
@@ -225,12 +225,13 @@ public class SyntaticalAnalysis {
         } else {
             showError(); 
         }
+         return null;
     }
 
 //    <value> ::= (<var> | <gen>)
 //        { '.' (<opposed> | <transposed> | <sum> | <mul>) }
 //        [ '.' (<size> | <rows> | <cols> | <val>) ]
-    void procValue() throws IOException {
+    Value<?> procValue() throws IOException {
         if(current.type == TokenType.VAR){
             procVar();
         } else if(current.type == TokenType.BRA_OPEN) {
@@ -262,24 +263,25 @@ public class SyntaticalAnalysis {
                 break;
             }
         }
+        return null;
     }
     
     //<opposed> ::= opposed '(' ')' 
-    void procOpposed() throws IOException {
+    OpposedMatrixValue procOpposed() throws IOException {
         matchToken(TokenType.OPPOSED);
         matchToken(TokenType.PAR_OPEN);
         matchToken(TokenType.PAR_CLOSE);
     }
     
     //<transposed> ::= transposed '(' ')'
-    void procTransposed() throws IOException {
+    TransposedMatrixValue procTransposed() throws IOException {
         matchToken(TokenType.TRANSPOSED);
         matchToken(TokenType.PAR_OPEN);
         matchToken(TokenType.PAR_CLOSE);
     }
 
     //<sum> ::= sum '(' <value> ')'
-    void procSum() throws IOException {
+     procSum() throws IOException {
         matchToken(TokenType.SUM);
         matchToken(TokenType.PAR_OPEN);
         procValue();

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package lp;
 
 /**
  *
- * @author root
+ * @author higorfischerdepaulalopes
  */
-public class Value<T> {
+class CommandBlock {
     
 }

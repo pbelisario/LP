@@ -9,6 +9,6 @@ package Pacote;
  *
  * @author root
  */
-class Variable {
+public class Variable {
     
 }
