@@ -5,20 +5,18 @@
  */
 package Pacote;
 
+import Pacote.Value;
+
 /**
  *
  * @author decom
  */
-public abstract class Value<T> {
-    private int line;
+public abstract class IntValue extends Value<Integer> {
     
-    public Value(int line){
-        this.line = line;
+    public IntValue(int line){
+        super(line);
     }
     
-    public int getLine(){
-        return this.line;
-    }
-    
-    public abstract T Value();
+    @Override
+    public abstract Integer Value();
 }

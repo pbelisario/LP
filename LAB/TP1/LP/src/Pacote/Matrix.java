@@ -7,10 +7,9 @@ package Pacote;
 
 /**
  *
- * @author root
+ * @author decom
  */
-class Matrix {
+public class Matrix {
     
-    public void show(){
-    }
+    public void show(){}
 }

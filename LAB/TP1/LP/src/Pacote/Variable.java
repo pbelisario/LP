@@ -9,6 +9,26 @@ package Pacote;
  *
  * @author root
  */
-public class Variable {
+public class Variable extends Value<Value> {
+    
+    private String name;
+    private Value<?> value;
+    
+    public Variable(String name){
+        super();
+        this.name = name;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setValue(Value<?> value){
+        this.value = value;
+    }
+    
+    public Value<?> value(){
+        return this.value;
+    }
     
 }

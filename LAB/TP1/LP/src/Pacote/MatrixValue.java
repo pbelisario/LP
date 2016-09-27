@@ -5,20 +5,19 @@
  */
 package Pacote;
 
+import Pacote.Matrix;
+
 /**
  *
  * @author decom
  */
-public abstract class Value<T> {
-    private int line;
+public abstract class MatrixValue extends Value<Matrix>{
     
-    public Value(int line){
-        this.line = line;
+    public MatrixValue(int line) {
+        super(line);
     }
     
-    public int getLine(){
-        return this.line;
-    }
+    @Override
+    public abstract Matrix Value();
     
-    public abstract T Value();
 }

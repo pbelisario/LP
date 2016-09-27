@@ -5,11 +5,20 @@
  */
 package lp;
 
+import Pacote.Command.ShowCommand;
+import Pacote.Command.IfCommand;
+import Pacote.Command.Command.AssignCommand;
+import Pacote.Command.Command.WhileCommand;
+import Pacote.Value;
+import Pacote.Command.CommandBlock;
+import Pacote.Command.Command;
 import Pacote.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import jdk.nashorn.internal.parser.Token;
+import lp.*;
+import Pacote.*;
 
 /**
  *
@@ -47,7 +56,7 @@ public class SyntaticalAnalysis {
     }
     
     //<statements> ::= <statement> { <statement>}
-    CommandBlock ßprocStatements() throws IOException{ 
+    CommandBlock procStatements() throws IOException{ 
         procStatement();
         while(current.type == TokenType.INPUT ||
         current.type == TokenType.SHOW ||
@@ -57,6 +66,7 @@ public class SyntaticalAnalysis {
         current.type == TokenType.FOR ){
             procStatement();
         }
+        return null;
     }
     
     //<statement> ::= <show> | <assign> | <if> | <while> | <for>
@@ -74,6 +84,7 @@ public class SyntaticalAnalysis {
         } else{
             showError();
         }
+        return null;
     }
     
     //<input> ::= input '(' <text> ')' ';'
@@ -83,6 +94,7 @@ public class SyntaticalAnalysis {
         procText();
         matchToken(TokenType.PAR_CLOSE);
         matchToken(TokenType.DOT_COMMA);
+        return null;
     }
     
     //<show> ::= show '(' <text> ')' ';'
@@ -115,6 +127,7 @@ public class SyntaticalAnalysis {
             procStatement();
         }
         matchToken(TokenType.END);
+        return null;
     }
     
     //<while> ::= whlie <boolexpr> <statements> end
@@ -123,6 +136,7 @@ public class SyntaticalAnalysis {
         procBoolExpr();
         procStatements();
         matchToken(TokenType.END);
+        return null;
     }
     
     //<for> ::= for <var> '=' <value> <statements> end
@@ -131,6 +145,7 @@ public class SyntaticalAnalysis {
         procMatrixExpr();
         procStatements();
         matchToken(TokenType.END);
+        return null;
     }
     
     //<text> ::= { <string> | <value> }
@@ -142,6 +157,7 @@ public class SyntaticalAnalysis {
       } else {
           showError();
       }
+      return null;
     }
     
     //<boolexpr> ::= <expr> <boolop> <expr> { ('&' | '|') <boolexpr> }
@@ -160,6 +176,7 @@ public class SyntaticalAnalysis {
                 showError();
             }
         }
+        return null;
     }
     
     //<boolop> ::= '==' | '!=' | '<' | '>' | '<=' | '>='
@@ -177,6 +194,7 @@ public class SyntaticalAnalysis {
         } else if(current.type == TokenType.GREATER_EQUAL){
             matchToken(TokenType.GREATER_EQUAL);
         }
+        return null;
     }
    
     //<expr> ::= <term> [ ('+' | '-') <term> ]
@@ -191,6 +209,7 @@ public class SyntaticalAnalysis {
         } else {
             showError();
         }        
+        return null;
     }
     
     //<term> ::= <factor> [ ('*' | '/' | '%') <factor> ]
@@ -206,6 +225,7 @@ public class SyntaticalAnalysis {
             matchToken(TokenType.MOD);
             procFactor();
         }
+        return null;
     }
     
     //<factor> ::= (['+' | '-'] <number>) | <value> | '(' <expr> ')'
@@ -271,6 +291,7 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.OPPOSED);
         matchToken(TokenType.PAR_OPEN);
         matchToken(TokenType.PAR_CLOSE);
+        return null;
     }
     
     //<transposed> ::= transposed '(' ')'
@@ -278,6 +299,7 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.TRANSPOSED);
         matchToken(TokenType.PAR_OPEN);
         matchToken(TokenType.PAR_CLOSE);
+        return null;
     }
 
     //<sum> ::= sum '(' <value> ')'
@@ -286,6 +308,7 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.PAR_OPEN);
         procValue();
         matchToken(TokenType.PAR_CLOSE);
+        return null;
     }
 
     //<mul> ::= mul '(' <value> ')'
@@ -294,6 +317,7 @@ public class SyntaticalAnalysis {
         matchToken(TokenType.PAR_OPEN);
         procValue();
         matchToken(TokenType.PAR_CLOSE);
+        
     }
     
     void procSize() throws IOException{

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lp;
+package Pacote;
 
 /**
  *
- * @author higorfischerdepaulalopes
+ * @author decom
  */
-class CommandBlock {
+public class BoolValue {
     
 }
