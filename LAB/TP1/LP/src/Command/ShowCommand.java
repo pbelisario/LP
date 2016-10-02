@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote.Command;
+package Command;
 
-import Pacote.Command.Command;
-import Pacote.*;
+import Value.MatrixValue.*;
+import Value.IntValue.IntValue;
+import Value.StringValue.StringValue;
+import Command.Command;
+import Value.*;
 import lp.*;
 
 /**
@@ -21,6 +24,7 @@ public class ShowCommand extends Command{
         super(line);
         this.value = value;
     }
+
     
     public void execute(){
         if(value instanceof IntValue){

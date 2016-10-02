@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value.BoolValue;
 
-import Pacote.Value;
+import Value.Value;
 
 /**
  *
- * @author decom
+ * @author higorfischerdepaulalopes
  */
-public abstract class IntValue extends Value<Integer> {
+public abstract class BoolValue extends Value<Boolean>{
     
-    public IntValue(int line){
+    public BoolValue(int line){
         super(line);
     }
     
-    @Override
-    public abstract Integer Value();
+    public abstract Boolean Value();
+
 }
+

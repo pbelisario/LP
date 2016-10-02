@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value.IntValue;
 
 /**
  *
- * @author decom
+ * @author higorfischerdepaulalopes
  */
-public class Matrix {
+public enum IntOp {
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Mod;
     
-    public void show(){}
 }

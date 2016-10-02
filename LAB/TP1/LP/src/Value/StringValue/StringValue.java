@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value.StringValue;
 
-import Pacote.Matrix;
+import Value.Value;
+import Value.Value;
 
 /**
  *
  * @author decom
  */
-public abstract class MatrixValue extends Value<Matrix>{
+public abstract class StringValue extends Value<String>{
     
-    public MatrixValue(int line) {
+    public StringValue(int line) {
         super(line);
     }
     
-    @Override
-    public abstract Matrix Value();
+    public abstract String Value();
+    
     
 }

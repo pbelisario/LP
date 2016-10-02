@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Command;
 
 /**
  *
  * @author decom
  */
-public abstract class Value<T> {
+public abstract class Command {
     private int line;
     
-    public Value(int line){
+    public Command(int line){
         this.line = line;
     }
     
     public int getLine(){
-        return this.line;
+        return line;
     }
     
-    public abstract T Value();
+    public abstract void execute();
+    
 }

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote.Command;
+package Command;
 
-import Pacote.BoolValue;
-import Pacote.Command.Command;
+import Value.BoolValue.BoolValue;
+import Value.*;
+import Command.Command;
 
 /**
  *
@@ -33,6 +34,14 @@ public class IfCommand extends Command{
     
     public void execute(){
         
+       if(expr.Value()){
+           then.execute();
+       } else {
+           if(elsee != null){
+               elsee.execute();
+           }
+       }
+       
     }
     
 }

@@ -3,12 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lp;
+package Value.BoolValue;
 
 /**
  *
  * @author higorfischerdepaulalopes
  */
-class InputIntValue {
+public enum RelOp {
+    Equal,
+    NotEqual,
+    LowerThan,
+    LowerEqual,
+    GreaterThan,
+    GreaterEqual;
     
+    private int aux;
+    
+    public int getValue(){
+        return aux;
+    }
 }

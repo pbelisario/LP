@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote.Command;
+package Value.MatrixValue;
+
+import Value.*;
+import Value.Value;
 
 /**
  *
  * @author decom
  */
-public abstract class Command {
-    private int line;
+public abstract class MatrixValue extends Value<Matrix>{
     
-    public Command(int line){
-        this.line = line;
+    public MatrixValue(int line) {
+        super(line);
     }
     
-    public int getLine(){
-        return line;
-    }
-    
-    public abstract void execute();
+    @Override
+    public abstract Matrix Value();
     
 }

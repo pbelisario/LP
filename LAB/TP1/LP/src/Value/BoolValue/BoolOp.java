@@ -3,12 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value.BoolValue;
 
 /**
  *
- * @author decom
+ * @author higorfischerdepaulalopes
  */
-public class BoolValue {
+public enum BoolOp {
+    
+    And,
+    Or;
+    
+    private int aux;
+
+    public int getValue(){
+        return aux;
+    }
+    
     
 }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote.Command;
+package Command;
 
-import Pacote.Command.Command;
+import Command.Command;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +26,8 @@ public class CommandBlock extends Command{
     }
     
     public void execute(){
-        
+        for(Command command : commands){
+            command.execute();
+        }
     }
 }

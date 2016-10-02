@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value;
 
 /**
  *
  * @author decom
  */
-public abstract class StringValue extends Value<String>{
+public abstract class Value<T> {
     
-    public StringValue(int line) {
-        super(line);
+    private int line;
+    
+    public Value(int line){
+        this.line = line;
     }
     
-    public abstract String Value();
+    public int getLine(){
+        return this.line;
+    }
     
-    
+    public abstract T Value();
 }

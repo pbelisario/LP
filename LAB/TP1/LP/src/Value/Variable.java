@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Pacote;
+package Value;
+
+import Value.Value;
 
 /**
  *
  * @author root
  */
-public class Variable extends Value<Value> {
+public class Variable extends Value<Value<?>> {
     
     private String name;
     private Value<?> value;
     
-    public Variable(String name){
-        super();
+    public Variable(String name, int line){
+        super(line);
         this.name = name;
     }
     
@@ -27,8 +29,9 @@ public class Variable extends Value<Value> {
         this.value = value;
     }
     
-    public Value<?> value(){
+    public Value<?> Value(){
         return this.value;
     }
-    
+
+
 }
