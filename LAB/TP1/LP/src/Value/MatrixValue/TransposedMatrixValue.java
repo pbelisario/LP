@@ -25,6 +25,10 @@ public class TransposedMatrixValue extends MatrixValue{
     public Matrix Value() {
         Value v1 = (this.matrix instanceof Variable ? ((Variable) this.matrix).Value() : this.matrix);
         
+        if(!(v1 instanceof MatrixValue)){
+            lp.SyntaticalAnalysis.error(this.getLine(),"Matriz invalida");
+        }
+        
         Matrix m = ((MatrixValue) v1).Value();
         
         return m.transposed();

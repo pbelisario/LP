@@ -26,8 +26,17 @@ public class DualBoolExpr extends BoolValue {
     }
     
     public Boolean Value() {
+        //Value v1 = (left instanceof Variable ? ((Variable) left).Value() : left);
         Value v1 = left;
         Value v2 = right;
+        
+        if(!(v1 instanceof BoolValue && v2 instanceof BoolValue)){
+            if(!(v1 instanceof BoolValue)){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Primeira expressao invalida");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine(),"Segunda expressao invalida");
+            }
+        }
         
         boolean l = ((BoolValue) v1).Value();
         boolean r = ((BoolValue) v2).Value();

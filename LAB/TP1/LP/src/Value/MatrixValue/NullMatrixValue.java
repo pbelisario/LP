@@ -7,6 +7,7 @@ package Value.MatrixValue;
 
 import Value.IntValue.IntValue;
 import Value.Value;
+import Value.Variable;
 
 /**
  *
@@ -25,8 +26,19 @@ public class NullMatrixValue extends MatrixValue{
 
     @Override
     public Matrix Value() {
-        int rows = ((IntValue) r).Value();
-        int cols = ((IntValue) c).Value();
+        Value row = (r instanceof Variable ? ((Variable) r).Value() : r);
+        Value col = (c instanceof Variable ? ((Variable) c).Value() : c);
+        
+        if(!(row instanceof IntValue && col instanceof IntValue)){
+            if(!(row instanceof IntValue)){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor de linha invalido");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor de coluna invalido");
+            }
+        }
+        
+        int rows = ((IntValue) row).Value();
+        int cols = ((IntValue) col).Value();
         
         return Matrix.Null(rows, cols);
     }

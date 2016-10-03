@@ -34,7 +34,11 @@ public class CompareBoolValue extends BoolValue{
         Value v2 = (right instanceof Variable ? ((Variable) right).Value() : right);
         
         if(!(v1 instanceof IntValue && v2 instanceof IntValue)){
-            //error
+            if(!(v1 instanceof IntValue)){
+                lp.SyntaticalAnalysis.error(this.getLine()," Primeiro valor invalido");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine()," Segundo valor invalido");
+            }
         }
         
         int l = ((IntValue) left).Value();

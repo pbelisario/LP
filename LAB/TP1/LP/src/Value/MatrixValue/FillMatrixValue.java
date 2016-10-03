@@ -28,10 +28,25 @@ public class FillMatrixValue extends MatrixValue{
 
     @Override
     public Matrix Value() {
+        Value row = (r instanceof Variable ? ((Variable) r).Value() : r);
+        Value col = (c instanceof Variable ? ((Variable) c).Value() : c);
+        Value val = (v instanceof Variable ? ((Variable) v).Value() : v);
+        
+        if(!(row instanceof IntValue && col instanceof IntValue && val instanceof IntValue)){
+            if(!(row instanceof IntValue)){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor de linha invalido");
+            } else if(col instanceof IntValue){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor de coluna invalido");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor invalido");
+            }
+        }
         
         int rows = ((IntValue) r).Value();
         int cols = ((IntValue) c).Value();
         int value = ((IntValue) v).Value();
+        
+        
         
         return Matrix.fill(rows, cols, value);
         

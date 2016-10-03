@@ -12,6 +12,7 @@ import Value.Value;
  * @author higorfischerdepaulalopes
  */
 public class SeqMatrixValue extends MatrixValue{
+    
     private Value<?> from;
     private Value<?> to;
     private boolean inverted;

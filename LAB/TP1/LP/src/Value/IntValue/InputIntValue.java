@@ -27,7 +27,7 @@ public class InputIntValue extends IntValue{
         try{
             return Integer.parseInt(in.next());
         } catch(NumberFormatException e) {
-            System.out.println("Tipo errado");
+            lp.SyntaticalAnalysis.error(this.getLine(),"Input error :Valor nao inteiro");
         }
         return null;
     }

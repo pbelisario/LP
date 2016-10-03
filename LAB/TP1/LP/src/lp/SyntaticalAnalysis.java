@@ -35,11 +35,7 @@ public class SyntaticalAnalysis {
         if(type == current.type){
             current = la.nextToken();
         } else {
-            if(current.type == TokenType.UNEXPECTED_EOF){
-                unexpectedEofError();
-            } else {
-                unexpectedToken();
-            }
+            showError();
         }
     }
     
@@ -484,22 +480,19 @@ public class SyntaticalAnalysis {
 //        
 //    }
 
-    private void unexpectedEofError() {
-        System.out.println("Error, Fim de arquivo inexperado");
-    }
-
-    private void unexpectedToken() {
-        System.out.println("ERROR, Token inesperado : "+ '"'+current.type+'"');
-        System.exit(1);
-              
-    }
 
     private void showError() {
         if(current.type == TokenType.UNEXPECTED_EOF){
-            unexpectedEofError();
+            System.out.println("Error, Fim de arquivo inexperado");
         } else if(current.type == TokenType.INVALID_TOKEN){
-            unexpectedToken();
+            System.out.println("ERROR, Token inesperado : "+ '"'+current.type+'"');
+            System.exit(1);
         }
+    }
+    
+    public static void error(int line, String erro){
+        System.out.println("["+line +"] Erro \n ->" + erro);
+        System.exit(1);
     }
 
 }

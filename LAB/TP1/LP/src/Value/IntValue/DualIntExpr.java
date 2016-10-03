@@ -31,6 +31,14 @@ public class DualIntExpr extends IntValue{
         Value v1 = (left instanceof Variable ? ((Variable) left).Value() : left);
         Value v2 = (right instanceof Variable ? ((Variable) right).Value() : right);
         
+        if(!(v1 instanceof Variable && v2 instanceof Variable)){
+            if(!(v1 instanceof Variable)){
+                lp.SyntaticalAnalysis.error(this.getLine()," Primeiro inteiro invalido");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine()," Segundo inteiro invalido");
+            }
+        }
+        
         Integer l = ((IntValue) v1).Value();
         Integer r = ((IntValue) v2).Value();
         

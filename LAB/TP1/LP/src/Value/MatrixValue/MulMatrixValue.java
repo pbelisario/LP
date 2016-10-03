@@ -7,6 +7,7 @@ package Value.MatrixValue;
 
 import Value.IntValue.IntValue;
 import Value.Value;
+import Value.Variable;
 
 /**
  *
@@ -26,8 +27,21 @@ public class MulMatrixValue extends MatrixValue {
 
     @Override
     public Matrix Value() {
-        Matrix m = ((MatrixValue) matrix).Value();
-            int val = ((IntValue) value).Value();
+        
+        Value v = (value instanceof Variable ? ((Variable) value).Value() : value);
+        Value vM = (matrix instanceof Variable ? ((Variable) matrix).Value() : matrix);
+        
+        if(!(v instanceof IntValue && vM instanceof MatrixValue)){
+            if(!(v instanceof IntValue)){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Erro na multiplicacao. Inteiro errado");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine(),"Erro na multiplicacao. Matriz invalida");
+            }
+        }
+        
+        
+        Matrix m = ((MatrixValue) vM).Value();
+        int val = ((IntValue) v).Value();
         
         return m.mul(val);
     }

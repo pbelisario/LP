@@ -6,6 +6,7 @@
 package Value.MatrixValue;
 
 import Value.Value;
+import Value.Variable;
 
 /**
  *
@@ -23,6 +24,17 @@ public class SumMatrixValue extends MatrixValue{
 
     @Override
     public Matrix Value() {
+        Value v1 = (this.matrix1 instanceof Variable ? ((Variable) this.matrix1).Value() : this.matrix1);
+        Value v2 = (this.matrix2 instanceof Variable ? ((Variable) this.matrix2).Value() : this.matrix2);
+        
+        if(!(v1 instanceof MatrixValue && v2 instanceof MatrixValue)){
+            if(!(v1 instanceof MatrixValue)){
+                lp.SyntaticalAnalysis.error(this.getLine(),"Matriz 1 invalida");
+            } else {
+                lp.SyntaticalAnalysis.error(this.getLine(),"Matriz 2 invalida");
+            }
+        }
+        
         Matrix m1 = ((MatrixValue) matrix1 ).Value();
         Matrix m2 = ((MatrixValue) matrix2 ).Value();
         

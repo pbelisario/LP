@@ -6,6 +6,7 @@
 package Value.MatrixValue;
 
 import Value.Value;
+import Value.Variable;
 
 /**
  *
@@ -22,6 +23,12 @@ public class OpposedMatrixValue extends MatrixValue{
 
     @Override
     public Matrix Value() {
+        Value v1 = (this.matrix instanceof Variable ? ((Variable) this.matrix).Value() : this.matrix);
+        
+        if(!(matrix instanceof MatrixValue)){
+            lp.SyntaticalAnalysis.error(this.getLine(),"Matriz invalida");
+        }
+        
         Matrix m = ((MatrixValue) matrix).Value();
 
         return m.opposed();
