@@ -1,7 +1,7 @@
 # LP-TPs
 
-TP1
+TP1:
   Compilador de Linguagem propria (miniLab)
   
-TP2
+TP2:
   Resta Um em C++
