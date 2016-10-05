@@ -5,18 +5,31 @@
  */
 package Value.IntValue;
 
+import Value.MatrixValue.Matrix;
+import Value.MatrixValue.MatrixValue;
+import Value.Value;
+import Value.Variable;
+
 /**
  *
  * @author higorfischerdepaulalopes
  */
 public class SizeIntMatrixValue extends IntMatrixValue{
 
-    public SizeIntMatrixValue(Value.Value<?> matrix, int line) {
+    public SizeIntMatrixValue(Value<?> matrix, int line) {
         super(matrix, line);
     }
 
     public Integer Value() {
-        return null;
+         Value m1 = (matrix instanceof Variable ? ((Variable) matrix).Value() : matrix);
+        
+        if (!(m1 instanceof MatrixValue)) {
+            lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido");
+        }
+        
+        Matrix m = ((MatrixValue) m1).Value();
+
+        return m.size();
     }
     
     

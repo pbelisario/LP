@@ -5,7 +5,12 @@
  */
 package Value.IntValue;
 
+import Value.StringValue.StringValue;
 import Value.Value;
+import Value.Variable;
+import Value.MatrixValue.Matrix;
+import Value.MatrixValue.MatrixValue;
+
 import java.util.Scanner;
 
 /**
@@ -14,22 +19,40 @@ import java.util.Scanner;
  */
 public class InputIntValue extends IntValue{
     
-    private Value<?> string;
+    private Value<?> value;
+    private static Scanner in;
+    
+    static {
+    	in = new Scanner(System.in);
+    }
 
-    public InputIntValue(Value<?> string, int line) {
+    public InputIntValue(Value<?> value, int line) {
         super(line);
-        this.string = string;
+
+        this.value = value;
     }
 
     @Override
     public Integer Value() {
-        Scanner in = new Scanner(System.in);
-        try{
-            return Integer.parseInt(in.next());
-        } catch(NumberFormatException e) {
-            lp.SyntaticalAnalysis.error(this.getLine(),"Input error :Valor nao inteiro");
-        }
-        return null;
+        Value<?> val = (this.value instanceof Variable ? ((Variable) this.value).Value() : this.value);
+        
+       if(val instanceof IntValue){
+           IntValue iv = (IntValue) val;
+           int n = iv.Value();
+           System.out.print(n);
+       } else if (val instanceof StringValue){
+           StringValue sv = (StringValue) val;
+           String s = sv.Value();
+           System.out.print(s);
+       } else if(val instanceof MatrixValue){
+           MatrixValue mv = (MatrixValue) val;
+           Matrix m = mv.Value();
+           m.show();
+       } else {
+          lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido[show]");
+       }
+
+       return in.nextInt();
     }
     
     

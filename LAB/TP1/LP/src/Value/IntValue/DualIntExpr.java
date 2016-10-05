@@ -27,12 +27,11 @@ public class DualIntExpr extends IntValue{
 
     @Override
     public Integer Value() {
+        Value<?> v1 = (left instanceof Variable ? ((Variable) left).Value() : left);
+        Value<?> v2 = (right instanceof Variable ? ((Variable) right).Value() : right);
         
-        Value v1 = (left instanceof Variable ? ((Variable) left).Value() : left);
-        Value v2 = (right instanceof Variable ? ((Variable) right).Value() : right);
-        
-        if(!(v1 instanceof Variable && v2 instanceof Variable)){
-            if(!(v1 instanceof Variable)){
+        if(!(v1 instanceof IntValue && v2 instanceof IntValue)){
+            if(!(v1 instanceof IntValue)){
                 lp.SyntaticalAnalysis.error(this.getLine()," Primeiro inteiro invalido");
             } else {
                 lp.SyntaticalAnalysis.error(this.getLine()," Segundo inteiro invalido");

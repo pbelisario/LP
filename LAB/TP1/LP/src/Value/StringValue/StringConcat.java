@@ -5,6 +5,8 @@
  */
 package Value.StringValue;
 
+import Value.IntValue.IntValue;
+import Value.MatrixValue.MatrixValue;
 import Value.StringValue.StringValue;
 import Value.Value;
 import Value.Variable;
@@ -29,17 +31,17 @@ public class StringConcat extends StringValue{
         Value val1 = (left instanceof Variable ? ((Variable) left).Value() : left);
         Value val2 = (right instanceof Variable ? ((Variable) right).Value() : right);
         
-        if(!(val1 instanceof StringValue && val2 instanceof StringValue)){
-            if(!(val1 instanceof StringValue)){
-                lp.SyntaticalAnalysis.error(this.getLine()," primeira String invalida");
-            } else {
-                lp.SyntaticalAnalysis.error(this.getLine()," primeira String invalida");
-            }
-        }
+        String s1 = "";
+        if (val1 instanceof IntValue)s1 = Integer.toString(((IntValue) val1).Value());
+        else if (val1 instanceof StringValue)s1 = ((StringValue) val1).Value();
+        else if (val1 instanceof MatrixValue) s1 = ((MatrixValue) val1).Value().toString();
+
         
-        String v1 = ((StringValue) val1).Value();
-        String v2 = ((StringValue) val2).Value();
+        String s2 = "";
+        if (val2 instanceof IntValue) s2 = Integer.toString(((IntValue) val2).Value());
+        else if (val2 instanceof StringValue) s2 = ((StringValue) val2).Value();
+        else if (val2 instanceof MatrixValue) s2 = ((MatrixValue) val2).Value().toString();
         
-        return (v1+v2);
+        return (s1+s2);
     }
 }

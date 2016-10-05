@@ -19,4 +19,5 @@ public abstract class IntValue extends Value<Integer> {
     }
     
     public abstract Integer Value();
+
 }

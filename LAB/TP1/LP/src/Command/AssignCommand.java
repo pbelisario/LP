@@ -31,27 +31,18 @@ public class AssignCommand extends Command{
     }
     
     public void execute(){
-         if(value instanceof IntValue){
-            IntValue iv = (IntValue) value;
-            int n = iv.Value();
-            
-            ConstIntValue cnsI = new ConstIntValue(n,-1);
-            var.setValue(cnsI);
-                    
-            
-        } else if (value instanceof StringValue){
-            StringValue sv = (StringValue) value;
-            String s = sv.Value();
-            
-            
-        } else if(value instanceof MatrixValue){
-            MatrixValue mv = (MatrixValue) value;
-            Matrix m = mv.Value();
-            
-            RefMatrixValue rvM = new RefMatrixValue(m,-1);
-            var.setValue(rvM);
+
+        Value variable = (value instanceof Variable ? ((Variable) value).Value() : value);
+        
+        if (variable instanceof IntValue) {
+            IntValue a = (IntValue) variable;
+            Integer b = a.Value();
+            ConstIntValue c = new ConstIntValue(b, variable.getLine());
+            var.setValue(c);
+        } else if (variable instanceof MatrixValue) {
+            var.setValue(variable);
         } else {
-           //ERRO
+            lp.SyntaticalAnalysis.error(this.getLine(),"Erro Assign AQUI");
         }
     
     }

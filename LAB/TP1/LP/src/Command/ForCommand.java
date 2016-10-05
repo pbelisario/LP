@@ -6,6 +6,9 @@
 package Command;
 
 import Value.*;
+import Value.IntValue.ConstIntValue;
+import Value.MatrixValue.Matrix;
+import Value.MatrixValue.MatrixValue;
 
 /**
  *
@@ -25,7 +28,24 @@ public class ForCommand extends Command {
     }
 
     public void execute(){
+        Value valor = (value instanceof Variable ? ((Variable) value).Value() : value);
+        if (!(var instanceof Variable && valor instanceof MatrixValue)) {
+            lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido[for]");
+        }
         
+        Matrix mat = ((MatrixValue) value).Value();
+        
+        int rows = mat.rows();
+        int cols = mat.cols();
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                ConstIntValue value1 = new ConstIntValue(mat.value(i, j), this.getLine());
+                var.setValue(value1);
+                cmd.execute();
+                
+            }
+        }
     }
     
 }

@@ -26,9 +26,11 @@ public class ValueIntMatrixValue extends IntMatrixValue {
     }
  
     public Integer Value(){
-        Value v1 = (this.matrix instanceof Variable ? ((Variable) this.matrix).Value() : this.matrix);
+        Value valM = (this.matrix instanceof Variable ? ((Variable) this.matrix).Value() : this.matrix);
+        Value val1 = (this.v1 instanceof Variable ? ((Variable) this.v1).Value() : this.v1);
+        Value val2 = (this.v2 instanceof Variable ? ((Variable) this.v2).Value() : this.v2);
         
-        if(!(v1 instanceof MatrixValue)){
+        if(!(valM instanceof MatrixValue && val1 instanceof IntValue && val2 instanceof IntValue)){
            lp.SyntaticalAnalysis.error(this.getLine()," Matriz invalida");
         }
         

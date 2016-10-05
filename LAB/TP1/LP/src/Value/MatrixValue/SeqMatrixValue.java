@@ -5,7 +5,9 @@
  */
 package Value.MatrixValue;
 
+import Value.IntValue.IntValue;
 import Value.Value;
+import Value.Variable;
 
 /**
  *
@@ -26,7 +28,23 @@ public class SeqMatrixValue extends MatrixValue{
 
     @Override
     public Matrix Value() {
-        return null;
+        
+        Value f = (from instanceof Variable ? ((Variable) from).Value() : from);
+        Value t = (to instanceof Variable ? ((Variable) to ).Value(): to);
+
+        if (!(f instanceof IntValue && t instanceof IntValue)) {
+            lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido : valor de linha invalido");
+        }
+        
+        Integer from = ((IntValue) f).Value();
+        Integer to = ((IntValue) t).Value();
+        
+        
+        if (inverted) {
+            return Matrix.iseq(from, to);
+        } else {
+            return Matrix.seq(from, to);
+        }
     }
     
     

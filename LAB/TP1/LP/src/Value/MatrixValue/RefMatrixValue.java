@@ -25,8 +25,8 @@ public class RefMatrixValue extends MatrixValue{
     @Override
     public Matrix Value() {
         
-        int rows = m.rows();
-        int cols = m.cols();
+        Integer rows = m.rows();
+        Integer cols = m.cols();
                 
         Matrix aux = new Matrix(rows,cols);
         for(int i = 0; i < rows ; i++){

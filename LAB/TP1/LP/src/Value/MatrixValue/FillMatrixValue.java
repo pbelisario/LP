@@ -42,9 +42,9 @@ public class FillMatrixValue extends MatrixValue{
             }
         }
         
-        int rows = ((IntValue) r).Value();
-        int cols = ((IntValue) c).Value();
-        int value = ((IntValue) v).Value();
+        Integer rows = ((IntValue) row).Value();
+        Integer cols = ((IntValue) col).Value();
+        Integer value = ((IntValue) val).Value();
         
         
         

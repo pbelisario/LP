@@ -16,9 +16,10 @@ public class Variable extends Value<Value<?>> {
     private String name;
     private Value<?> value;
     
-    public Variable(String name, int line){
+    public Variable(String name,Value<?> value,int line){
         super(line);
         this.name = name;
+        this.value = value;
     }
     
     public String getName(){
@@ -32,6 +33,4 @@ public class Variable extends Value<Value<?>> {
     public Value<?> Value(){
         return this.value;
     }
-
-
 }

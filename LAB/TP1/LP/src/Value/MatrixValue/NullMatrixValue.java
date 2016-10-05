@@ -37,8 +37,8 @@ public class NullMatrixValue extends MatrixValue{
             }
         }
         
-        int rows = ((IntValue) row).Value();
-        int cols = ((IntValue) col).Value();
+        Integer rows = ((IntValue) row).Value();
+        Integer cols = ((IntValue) col).Value();
         
         return Matrix.Null(rows, cols);
     }

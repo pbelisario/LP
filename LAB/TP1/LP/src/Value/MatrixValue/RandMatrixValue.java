@@ -37,8 +37,8 @@ public class RandMatrixValue extends MatrixValue {
             }
         }
         
-        int rows = ((IntValue) row).Value();
-        int cols = ((IntValue) col).Value();
+        Integer rows = ((IntValue) row).Value();
+        Integer cols = ((IntValue) col).Value();
 
         return Matrix.rand(rows, cols);
     }

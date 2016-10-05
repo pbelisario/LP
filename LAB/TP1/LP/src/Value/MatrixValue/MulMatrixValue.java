@@ -31,19 +31,23 @@ public class MulMatrixValue extends MatrixValue {
         Value v = (value instanceof Variable ? ((Variable) value).Value() : value);
         Value vM = (matrix instanceof Variable ? ((Variable) matrix).Value() : matrix);
         
-        if(!(v instanceof IntValue && vM instanceof MatrixValue)){
+        if(!((v instanceof IntValue || v instanceof MatrixValue ) && vM instanceof MatrixValue)){
             if(!(v instanceof IntValue)){
-                lp.SyntaticalAnalysis.error(this.getLine(),"Erro na multiplicacao. Inteiro errado");
+                lp.SyntaticalAnalysis.error(this.getLine(),"Erro na multiplicacao. Valor invalido");
             } else {
                 lp.SyntaticalAnalysis.error(this.getLine(),"Erro na multiplicacao. Matriz invalida");
             }
         }
         
-        
-        Matrix m = ((MatrixValue) vM).Value();
-        int val = ((IntValue) v).Value();
-        
-        return m.mul(val);
+         if(v instanceof MatrixValue){
+            Matrix v1 = ((MatrixValue) v).Value();
+            Matrix m = ((MatrixValue) vM).Value();
+            return m.mul(v1);
+        }else{
+             Integer v1 = ((IntValue) v).Value();
+             Matrix m = ((MatrixValue) vM).Value();
+             return m.mul(v1);
+         }
     }
     
     

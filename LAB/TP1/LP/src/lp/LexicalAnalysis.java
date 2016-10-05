@@ -52,6 +52,7 @@ public class LexicalAnalysis implements AutoCloseable{
                         if(c == '\n'){
                             line++;
                         }
+                        lex.token="";
                         estado = 1;
                     } else if (c == '#'){
                         estado = 2;
@@ -63,6 +64,11 @@ public class LexicalAnalysis implements AutoCloseable{
                         estado = 4;
                     } else if(c == '>' || c == '<' || c == '='){
                         lex.token += (char) c;
+                        lex.type = TokenType.ASSIGN;
+                        if(c == '>')
+                            lex.type = TokenType.GREATER;
+                        else if(c == '<')
+                            lex.type = TokenType.LOWER;
                         estado = 5;
                     } else if(Character.isLetter(c)){
                         lex.token += (char) c;
@@ -127,7 +133,13 @@ public class LexicalAnalysis implements AutoCloseable{
                         return lex;
                     }
                     if(c == '='){
-                        lex.token += (char) c;
+                        if(lex.type == TokenType.ASSIGN)
+                            lex.type = TokenType.EQUAL;
+                        else if(lex.type == TokenType.GREATER)
+                            lex.type = TokenType.GREATER_EQUAL;
+                        else if(lex.type == TokenType.LOWER)
+                            lex.type = TokenType.LOWER_EQUAL;
+                        lex.token+= (char) c;
                         estado = 8;              
                     } else {
                         input.unread(c);

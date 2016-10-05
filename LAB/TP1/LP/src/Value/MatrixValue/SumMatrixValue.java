@@ -17,9 +17,10 @@ public class SumMatrixValue extends MatrixValue{
     private Value<?> matrix1;
     private Value<?> matrix2;
 
-    public SumMatrixValue(Value<?> matrix1, int line) {
+    public SumMatrixValue(Value<?> matrix1,Value<?> matrix2, int line) {
         super(line);
         this.matrix1 = matrix1;
+        this.matrix2 = matrix2;
     }
 
     @Override
@@ -35,8 +36,8 @@ public class SumMatrixValue extends MatrixValue{
             }
         }
         
-        Matrix m1 = ((MatrixValue) matrix1 ).Value();
-        Matrix m2 = ((MatrixValue) matrix2 ).Value();
+        Matrix m1 = ((MatrixValue) v1 ).Value();
+        Matrix m2 = ((MatrixValue) v2 ).Value();
         
         return m1.sum(m2);
     }

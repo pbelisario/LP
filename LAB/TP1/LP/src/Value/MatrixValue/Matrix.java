@@ -131,7 +131,9 @@ public class Matrix {
         for(int i = 0; i < r; i++){
             for(int j = 0; j < c; j++){
                 aux.setValue(i,j,rand.nextInt(101));
+                System.out.print(aux.value(i, j)+" ");
             }
+            System.out.println();
         }
         return aux;
     }
