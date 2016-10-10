@@ -9,6 +9,9 @@ package lp;
  * @author alunoccc
  */
 public enum TokenType {
+    INVALID_TYPE(-5),
+    INVALID_OPERATION(-4),
+    UNEXPECTED_TOKEN(-3),
     UNEXPECTED_EOF(-2), // = -2,
     INVALID_TOKEN(-1), // = -1,
     END_OF_FILE(0), // = 0

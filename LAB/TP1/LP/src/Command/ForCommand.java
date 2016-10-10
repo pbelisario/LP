@@ -33,7 +33,7 @@ public class ForCommand extends Command {
             lp.SyntaticalAnalysis.error(this.getLine(),"Valor Invalido[for]");
         }
         
-        Matrix mat = ((MatrixValue) value).Value();
+        Matrix mat = ((MatrixValue) valor).Value();
         
         int rows = mat.rows();
         int cols = mat.cols();

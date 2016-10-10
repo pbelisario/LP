@@ -33,9 +33,15 @@ public class Matrix {
     public void setValue(int r, int c, int v){
         this.matrix[r][c] = v;
     }
-    
-     
-    public void show(){}
+
+    public void show() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(this.matrix[i][j]+" ");
+            }
+            System.out.println("");
+        }
+    }
     
     public int size(){
         return rows * cols;
@@ -127,13 +133,11 @@ public class Matrix {
     
     public static Matrix rand(int r, int c){
         Random rand = new Random();
-        Matrix aux = new Matrix(r,c);
+                Matrix aux = new Matrix(r,c);
         for(int i = 0; i < r; i++){
             for(int j = 0; j < c; j++){
                 aux.setValue(i,j,rand.nextInt(101));
-                System.out.print(aux.value(i, j)+" ");
             }
-            System.out.println();
         }
         return aux;
     }
@@ -152,22 +156,29 @@ public class Matrix {
         return aux;
     }
     
-    public static Matrix seq(int from, int to){
-       Matrix vect = new Matrix((to - from),1);
-       int aux = from;
-       for(int i = 0; i < (to - from); i++, aux++){
-           vect.setValue(i, 0, aux);
-       }
-       return vect;
+    static public Matrix seq(int from, int to) {
+        int lim = to - from + 1;
+        Matrix m = null;
+        if (lim > 0) {
+            m = new Matrix(1, lim);
+            for (int i = 0; i < lim; i++) {
+                m.setValue(0, i, i + from);
+            }
+        }
+        return m;
     }
     
-    public static Matrix iseq(int from, int to){
-       Matrix vect = new Matrix((from - to),1);
-       int aux = from;
-       for(int i = 0; i < (to - from); i++, aux--){
-           vect.setValue(i, 0, aux);
-       }
-       return vect;
+    static public Matrix iseq(int from, int to) {
+        int lim = from - to + 1;
+        Matrix m = null;
+        int j = lim - 1;
+        if (lim > 0) {
+            m = new Matrix(1, lim);
+            for (int i = 0; i < lim; i++) {
+                m.setValue(0, i, j - i);
+            }
+        }
+        return m;
     }
     
     

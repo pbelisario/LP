@@ -26,7 +26,7 @@ public class TransposedMatrixValue extends MatrixValue{
         Value v1 = (this.matrix instanceof Variable ? ((Variable) this.matrix).Value() : this.matrix);
         
         if(!(v1 instanceof MatrixValue)){
-            lp.SyntaticalAnalysis.error(this.getLine(),"Matriz invalida");
+            lp.SyntaticalAnalysis.showError(lp.TokenType.INVALID_OPERATION,line);
         }
         
         Matrix m = ((MatrixValue) v1).Value();
