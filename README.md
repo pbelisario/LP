@@ -1,5 +1,7 @@
-# LP-TP1
+# LP-TPs
 
-Primeiro Trabalho Pratico de Linguagens de Programacao
-
-Compilador de Linguagem propria (miniLab)
+TP1:
+  Compilador de Linguagem propria (miniLab)
+  
+TP2:
+  Resta Um em C++
