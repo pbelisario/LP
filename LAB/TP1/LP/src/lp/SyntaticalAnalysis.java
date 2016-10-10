@@ -36,7 +36,7 @@ public class SyntaticalAnalysis {
         if (type == current.type) {
             current = la.nextToken();
         } else {
-            showError();
+            showError(current, la.getLine());
         }
     }
 
@@ -147,12 +147,12 @@ public class SyntaticalAnalysis {
     //<text> ::= { <string> | <expr> }
     Value<?> procText() throws IOException {
         Value<?> val1, val = null;
-        while (current.type == TokenType.STRING ||
-        		current.type == TokenType.NUMBER ||
-        		current.type == TokenType.INPUT || 
-        		current.type == TokenType.VAR || 
-        		current.type == TokenType.BRA_OPEN ||
-        		current.type == TokenType.PAR_OPEN) {        	
+        while (current.type == TokenType.STRING
+                || current.type == TokenType.NUMBER
+                || current.type == TokenType.INPUT
+                || current.type == TokenType.VAR
+                || current.type == TokenType.BRA_OPEN
+                || current.type == TokenType.PAR_OPEN) {
             val1 = (current.type == TokenType.STRING ? procString() : procExpr());
             if (val != null) {
                 val = new StringConcat(val, val1, la.getLine());
@@ -181,7 +181,7 @@ public class SyntaticalAnalysis {
                 matchToken(TokenType.OR);
                 bop = BoolOp.Or;
             } else {
-                showError();
+                showError(current, la.getLine());
             }
             BoolValue bool = procBoolExpr();
             a = new DualBoolExpr(bop, a, bool, la.getLine());
@@ -210,7 +210,7 @@ public class SyntaticalAnalysis {
             matchToken(TokenType.GREATER_EQUAL);
             return RelOp.GreaterEqual;
         } else {
-            lp.SyntaticalAnalysis.error(la.getLine(), "Erro RelOp");
+           showError(current, la.getLine());
         }
         return null;
     }
@@ -231,7 +231,7 @@ public class SyntaticalAnalysis {
                     op = IntOp.Sub;
                     break;
                 default:
-                    showError();
+                    showError(current, la.getLine());
                     break;
             }
             Value val1 = procTerm();
@@ -256,7 +256,7 @@ public class SyntaticalAnalysis {
                 matchToken(TokenType.MOD);
                 op = IntOp.Mod;
             } else {
-                showError();
+                showError(current, la.getLine());
 
             }
             Value v2 = procFactor();
@@ -280,7 +280,7 @@ public class SyntaticalAnalysis {
             matchToken(TokenType.PAR_CLOSE);
             return val;
         } else {
-            showError();
+            showError(current, la.getLine());
             return null;
         }
     }
@@ -311,8 +311,7 @@ public class SyntaticalAnalysis {
         } else if (current.type == TokenType.BRA_OPEN) {
             val = procGen();
         } else {
-
-            showError();
+            showError(current, la.getLine());
         }
 
         while (current.type == TokenType.DOT) {
@@ -334,8 +333,7 @@ public class SyntaticalAnalysis {
             } else if (current.type == TokenType.VALUE) {
                 return procVal(val);
             } else {
-
-                showError();
+                showError(current, la.getLine());
             }
         }
         return val;
@@ -439,8 +437,7 @@ public class SyntaticalAnalysis {
         } else if (current.type == TokenType.ISEQ) {
             return procIseq();
         } else {
-
-            showError();
+            showError(current, la.getLine());
             return null;
         }
     }
@@ -509,7 +506,7 @@ public class SyntaticalAnalysis {
         Value val1 = procExpr();
         matchToken(TokenType.PAR_CLOSE);
 
-        SeqMatrixValue mat = new SeqMatrixValue(val, val, false, la.getLine());
+        SeqMatrixValue mat = new SeqMatrixValue(val, val1, false, la.getLine());
         return mat;
 
     }
@@ -562,45 +559,31 @@ public class SyntaticalAnalysis {
         return v;
     }
 
-    // <matrixexpr> ::= ( <var>|<gen> ) {'.' ( <opposed>| <transposed> | <sum> | <mul> )}
-//    void procMatrixExpr() throws IOException{
-//        if(current.type == TokenType.VAR) procVar();
-//        else if(current.type == TokenType.BRA_OPEN) procGen();
-//        else {
-//            showError();
-//        } while(current.type == TokenType.DOT){
-//            matchToken(TokenType.DOT);
-//            if(current.type == TokenType.TRANSPOSED){
-//                procTransposed();
-//            } else if(current.type == TokenType.OPPOSED){
-//                procOpposed();  
-//            } else if(current.type == TokenType.SUM){
-//                procSum();
-//            } else if(current.type == TokenType.MUL){
-//                procMul();
-//            } else {
-//                showError();
-//            }
-//            
-//        }
-//        
-//    }
-    private void showError() {
+    public static void showError(Lexema current, int line) {
         if (current.type == TokenType.UNEXPECTED_EOF) {
-            System.out.println("Error, Fim de arquivo inexperado");
+            System.out.println("["+ line +"] :" + "Fim de arquivo inexperado");
             System.exit(1);
         } else if (current.type == TokenType.INVALID_TOKEN) {
-            System.out.println("ERROR, Token inesperado : " + '"' + current.type + '"');
+            System.out.println("["+ line +"] :" + "Token invalido " + "["+ current.token + "]");
+            System.exit(1);
+        } else if (current.type == TokenType.INVALID_OPERATION) {
+            System.out.println("["+ line +"] :" + "Operando invalido " + "[" + current.token + "]");
+            System.exit(1);
+        } else if (current.type == TokenType.INVALID_TYPE) {
+            System.out.println("["+ line +"] :" + "Tipo invalido " + "["+ current.token + "]");
+            System.exit(1);
+        } else if (current.type == TokenType.UNEXPECTED_TOKEN) {
+            System.out.println("["+ line +"] :" + "Token inesperado : " + '"' + current.type + '"');
             System.exit(1);
         } else {
-        	System.out.println("ERROR : Current type = " + current.type);
+            System.out.println("Erro nao consta!");
             System.exit(1);
         }
     }
 
-    public static void error(int line, String erro) {
-        System.out.println("[" + line + "] Erro \n ->" + erro);
-        System.exit(1);
-    }
+//    public static void error(int line, String erro) {
+//        System.out.println("[" + line + "] Erro \n ->" + erro);
+//        System.exit(1);
+//    }
 
 }

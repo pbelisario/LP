@@ -34,9 +34,9 @@ public class ValueIntMatrixValue extends IntMatrixValue {
            lp.SyntaticalAnalysis.error(this.getLine()," Matriz invalida");
         }
         
-        Matrix m = ((MatrixValue) v1).Value();
-        int rows = ((IntValue) v1).Value();
-        int cols = ((IntValue) v2).Value();
+        Matrix m = ((MatrixValue) valM).Value();
+        int rows = ((IntValue) val1).Value();
+        int cols = ((IntValue) val2).Value();
         
         return m.value(rows,cols);
     }

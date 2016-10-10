@@ -41,8 +41,8 @@ public class CompareBoolValue extends BoolValue{
             }
         }
         
-        int l = ((IntValue) left).Value();
-        int r = ((IntValue) right).Value();
+        int l = ((IntValue) v1).Value();
+        int r = ((IntValue) v2).Value();
        
         
         if(op == RelOp.Equal){

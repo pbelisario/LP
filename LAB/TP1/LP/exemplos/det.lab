@@ -1,6 +1,0 @@
-# read the random matrix
-j = [].rand(3,3);
-k = [].seq(0,2);
-show(j);
-show(k);
-
